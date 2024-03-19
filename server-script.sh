@@ -50,7 +50,7 @@ if ! command -v apache2 >/dev/null 2>&1 && ! command -v httpd >/dev/null 2>&1; t
 
     apt update
     apt install apache2 -y
-
+    ufw allow mysql
     ufw allow 'Apache'
     ufw allow OpenSSH
     ufw enable
@@ -62,45 +62,44 @@ fi
 ###########################################################################
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
 ###########################################################################
-echo "###### ###### Domain"
+# echo "###### ###### Domain"
 
-# Apache document root
-DOC_ROOT="/var/www/html"
+# # Apache document root
+# DOC_ROOT="/var/www/html"
 
-# Generate a random file name
-TEMP_FILE="tempfile_$SERVER_NAME.html"
+# # Generate a random file name
+# TEMP_FILE="tempfile_$SERVER_NAME.html"
 
-# Create the temporary file in the document root
-echo "This is a temporary file" > "$DOC_ROOT/$TEMP_FILE"
+# # Create the temporary file in the document root
+# echo "This is a temporary file" > "$DOC_ROOT/$TEMP_FILE"
 
-URL="https://tools.sopress.net/wget/?h=true&u=https://$SERVER_NAME/$TEMP_FILE"
-echo $URL
-if curl --silent "$URL" | grep -q "404"; then
-    echo "The domain $SERVER_NAME is not serving content from this server."
+# URL="https://tools.sopress.net/wget/?h=true&u=https://$SERVER_NAME/$TEMP_FILE"
+# if curl --silent "$URL" | grep -q "404"; then
+#     echo "The domain $SERVER_NAME is not serving content from this server."
 
-    read -p "Do you want to continue (Y|n)? " -n 1 -r REPLY
-    echo    # Move to a new line
+#     read -p "Do you want to continue (Y|n)? " -n 1 -r REPLY
+#     echo    # Move to a new line
 
-    # Set default value if no input is given
-    if [[ -z "$REPLY" ]]; then
-        REPLY='Y'
-    fi
+#     # Set default value if no input is given
+#     if [[ -z "$REPLY" ]]; then
+#         REPLY='Y'
+#     fi
 
-    # Check the reply
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo "Proceeding..."
-        # Place your script logic here that executes if the user agrees to continue
-    else
-        echo "Exiting..."
-        exit 1
-        # The script will exit if the user doesn't agree to continue
-    fi    
-else
-    echo "The domain $SERVER_NAME is serving content from this server."
-fi
+#     # Check the reply
+#     if [[ $REPLY =~ ^[Yy]$ ]]; then
+#         echo "Proceeding..."
+#         # Place your script logic here that executes if the user agrees to continue
+#     else
+#         echo "Exiting..."
+#         exit 1
+#         # The script will exit if the user doesn't agree to continue
+#     fi    
+# else
+#     echo "The domain $SERVER_NAME is serving content from this server."
+# fi
 
-# Clean up: Remove the temporary file
-rm -f "$DOC_ROOT/$TEMP_FILE"
+# # Clean up: Remove the temporary file
+# rm -f "$DOC_ROOT/$TEMP_FILE"
 
 ###########################################################################
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
