@@ -52,12 +52,32 @@ if ! command -v apache2 >/dev/null 2>&1 && ! command -v httpd >/dev/null 2>&1; t
     apt install apache2 -y
     ufw allow mysql
     ufw allow 'Apache'
+    ufw allow 'Apache Full'
     ufw allow OpenSSH
     ufw enable
+
+    apt install php libapache2-mod-php php-mysql
+    apt install php-curl php-dom php-imagick php-zip php-gd php-intl php-mbstring -y
+
     echo "Apache has been installed successfully."
+
 else
     echo "Apache is already installed."
 fi
+
+
+###########################################################################
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
+###########################################################################
+echo "###### ###### Nixstats"
+
+apt install python3
+mv /usr/lib/python3.11/EXTERNALLY-MANAGED /usr/lib/python3.11/EXTERNALLY-MANAGED.old
+
+read -p "Nixstats User Id : " NIX_USERID
+
+wget -q -N --no-check-certificate https://nixstats.com/nixstatsagent.sh && bash nixstatsagent.sh "$NIX_USERID"
+
 
 ###########################################################################
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ #
