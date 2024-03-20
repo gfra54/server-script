@@ -57,7 +57,7 @@ if ! command -v apache2 >/dev/null 2>&1 && ! command -v httpd >/dev/null 2>&1; t
     ufw enable
 
     apt install php libapache2-mod-php php-mysql
-    apt install php-curl php-dom php-imagick php-zip php-gd php-intl php-mbstring -y
+    apt install php-curl php-dom php-imagick php-zip php-gd php-intl php-mbstring php-redis -y
 
     echo "Apache has been installed successfully."
 
